@@ -30,13 +30,9 @@ class _MyHomePageState extends State<MyHomePage> {
                 scrollDirection: Axis.horizontal,
                 itemCount: 14,
                 itemBuilder: (context, index) {
-                  return Container(
-                    height: 75,
-                    width: 75,
-                    decoration: const BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Colors.white,
-                    ),
+                  return CircleAvatar(
+                    radius: 40,
+                    backgroundImage: AssetImage("images/7309703.jpg"),
                   );
                 }),
           ),
@@ -63,6 +59,12 @@ class _MyHomePageState extends State<MyHomePage> {
                       itemCount: 14,
                       itemBuilder: (context, index) {
                         return Container(
+                          child: Center(
+                            child: Text(
+                              "#sla",
+                              style: TextStyle(color: Colors.black),
+                            ),
+                          ),
                           height: 75,
                           width: 130,
                           decoration: const BoxDecoration(
@@ -80,20 +82,18 @@ class _MyHomePageState extends State<MyHomePage> {
                         return Column(
                           children: [
                             Container(
+                              child: Image.asset(
+                                  "images/5e777b100488101.5f0a1da32a03f.jpg"),
                               margin: EdgeInsets.fromLTRB(0, 20, 0, 20),
                               height: 200,
                               decoration: BoxDecoration(
-                                  color: Colors.white,
                                   borderRadius: BorderRadius.circular(25)),
                             ),
                             ListTile(
-                              leading: Container(
-                                height: 75,
-                                width: 75,
-                                decoration: const BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: Colors.white,
-                                ),
+                              leading: CircleAvatar(
+                                radius: 40,
+                                backgroundImage:
+                                    AssetImage("images/7309703.jpg"),
                               ),
                               title: Text("nome"),
                               subtitle: Text("100k assistindo"),
