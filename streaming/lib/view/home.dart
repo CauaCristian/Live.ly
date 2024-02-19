@@ -112,7 +112,32 @@ class _MyHomePageState extends State<MyHomePage> {
         ],
       ),
       bottomNavigationBar: CurvedNavigationBar(
-        onTap: (index) {},
+        onTap: (index) {
+          if (index == 3) {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) {
+                  return Scaffold(
+                    appBar: AppBar(
+                      title: Text('Página de Login'),
+                      actions: [
+                        IconButton(
+                          icon: Icon(Icons.home),
+                          onPressed: () {
+                            Navigator.of(context)
+                                .pop(); // Retorna à página inicial
+                          },
+                        ),
+                      ],
+                    ),
+                    body: Text(""),
+                  );
+                },
+                // Replace YourNewScreen with the screen you want to navigate to
+              ),
+            );
+          }
+        },
         items: const [
           Icon(
             Icons.home,
