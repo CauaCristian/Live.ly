@@ -1,5 +1,6 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'loginPage.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
@@ -117,23 +118,8 @@ class _MyHomePageState extends State<MyHomePage> {
             Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (context) {
-                  return Scaffold(
-                    appBar: AppBar(
-                      title: Text('Página de Login'),
-                      actions: [
-                        IconButton(
-                          icon: Icon(Icons.home),
-                          onPressed: () {
-                            Navigator.of(context)
-                                .pop(); // Retorna à página inicial
-                          },
-                        ),
-                      ],
-                    ),
-                    body: Text(""),
-                  );
+                  return LoginPage();
                 },
-                // Replace YourNewScreen with the screen you want to navigate to
               ),
             );
           }
