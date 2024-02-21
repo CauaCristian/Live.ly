@@ -13,11 +13,11 @@ class MySqlDBconfiguration implements DBConfiguration {
   Future<MySqlConnection> createConnection() async {
     return await MySqlConnection.connect(
       ConnectionSettings(
-        host: '10.0.2.2',
-        port: 3306,
+        host: 'monorail.proxy.rlwy.net',
+        port: 37418,
         user: 'root',
-        password: null,
-        db: 'live_ly',
+        password: '6a2d5gaeaF3gE4fdbh35cBHAA1616Fd4',
+        db: 'railway',
       ),
     );
   }

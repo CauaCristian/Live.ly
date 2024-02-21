@@ -36,7 +36,9 @@ class _MyHomePageState extends State<LiveLy> {
             case 2:
               ;
             case 3:
-              setState(() {});
+              setState(() {
+                widget.body = LoginPage();
+              });
           }
         },
         items: const [

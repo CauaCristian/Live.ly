@@ -9,7 +9,7 @@ class LoginPage extends StatelessWidget {
   final DBConfiguration dbConfiguration = MySqlDBconfiguration();
 
   @override
-  Duration get loginTime => const Duration(milliseconds: 2250);
+  Duration get loginTime => const Duration(milliseconds: 6000);
 
   Future<String?> _authUser(LoginData data) async {
     try {
