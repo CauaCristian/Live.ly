@@ -1,82 +1,67 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_login/flutter_login.dart';
 import 'liveLy.dart';
-import '../model/db_configuration.dart';
-import '../model/mysql_db_configuration.dart';
-import 'package:mysql1/mysql1.dart';
+import '../control/db_Control.dart';
 
 class LoginPage extends StatelessWidget {
-  final DBConfiguration dbConfiguration = MySqlDBconfiguration();
+  DBController dbController = DBController();
 
-  @override
-  Duration get loginTime => const Duration(milliseconds: 6000);
-
-  Future<String?> _authUser(LoginData data) async {
-    try {
-      final MySqlConnection connection = await dbConfiguration.connection!;
-      final results = await connection.query(
-        "SELECT * FROM usuarios WHERE email = '${data.name}' AND senha = '${data.password}'",
-      );
-
-      if (results.isNotEmpty) {
-        return null;
-      } else {
-        return 'Credenciais inválidas';
-      }
-    } catch (e) {
-      print('Erro durante a autenticação: $e');
-      return 'Erro durante a autenticação';
+  Future<bool> _authUser(String email, String password) async {
+    bool userExists = await DBController().usuarioExist(email!, password!);
+    if (userExists) {
+      return true;
     }
+    return false;
   }
 
-  Future<String?> _signupUser(SignupData data) async {
+  Future<bool> _signupUser(data) async {
     try {
-      final MySqlConnection connection = await dbConfiguration.connection!;
-      final results = await connection.query(
-        "INSERT INTO usuarios (email, senha) VALUES ('${data.name}','${data.password}')",
-      );
-
-      if (results.affectedRows! > 0) {
-        return null;
-      } else {
-        return 'Erro ao cadastrar o usuário';
-      }
+      final results = DBController().insertUsuario(data.name!, data.password!);
+      return true;
     } catch (e) {
       print('Erro durante o cadastro: $e');
-      return 'Erro durante o cadastro';
+      return false;
     }
   }
 
-  Future<String?> _recoverPassword(String name) async {
-    try {
-      final MySqlConnection connection = await dbConfiguration.connection!;
-      final results = await connection.query(
-        "SELECT * FROM usuarios WHERE email = '${name}'",
-      );
+  TextEditingController _emailController = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
 
-      if (results.isNotEmpty) {
-        return 'Recuperação de senha enviada para o e-mail associado à conta.';
-      } else {
-        return 'Usuário não encontrado';
-      }
-    } catch (e) {
-      print('Erro durante a recuperação de senha: $e');
-      return 'Erro durante a recuperação de senha';
-    }
+  void _login() async {
+    String email = _emailController.text;
+    String password = _passwordController.text;
+    await _authUser(email, password);
+    print("Usuário: $email, Senha: $password");
   }
 
   @override
   Widget build(BuildContext context) {
-    return FlutterLogin(
-      title: 'Sign In',
-      onLogin: _authUser,
-      onSignup: _signupUser,
-      onSubmitAnimationCompleted: () {
-        Navigator.of(context).pushReplacement(MaterialPageRoute(
-          builder: (context) => LiveLy(),
-        ));
-      },
-      onRecoverPassword: _recoverPassword,
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Login Page'),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            TextField(
+              controller: _emailController,
+              decoration: InputDecoration(labelText: 'Usuário'),
+            ),
+            SizedBox(height: 16.0),
+            TextField(
+              controller: _passwordController,
+              decoration: InputDecoration(labelText: 'Senha'),
+              obscureText: true,
+            ),
+            SizedBox(height: 24.0),
+            ElevatedButton(
+              onPressed: _login,
+              child: Text('Login'),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

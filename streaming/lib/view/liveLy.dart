@@ -37,7 +37,11 @@ class _MyHomePageState extends State<LiveLy> {
               ;
             case 3:
               setState(() {
-                widget.body = LoginPage();
+                Navigator.of(context).pop();
+                Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (context) {
+                  return LoginPage();
+                }));
               });
           }
         },
