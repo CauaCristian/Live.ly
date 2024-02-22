@@ -34,7 +34,6 @@ class DBQuery {
       var result = await _connection!.query(
         "SELECT * FROM usuarios WHERE email = '$email' AND senha = '$senha'",
       );
-      print(result);
       if (result.isNotEmpty) {
         return true;
       }
