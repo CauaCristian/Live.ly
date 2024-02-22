@@ -8,45 +8,36 @@ class DBQuery {
     _connection = await DBConnection().createConnection();
   }
 
-  Future<void> insertUsuario(String email, String password) async {
+  Future<bool> insertUsuario(String email, String password) async {
     await setConnection();
     if (_connection != null) {
       await _connection!.query(
         "INSERT INTO usuarios (id,email, senha) VALUES (default,'$email','$password')",
       );
-      return;
+      return true;
     }
+    return false;
   }
 
-  Future<void> insertConta(String nome, String descricao) async {
+  Future<bool> insertConta(String nome, String descricao) async {
     await setConnection();
     if (_connection != null) {
       _connection!.query(
         "INSERT INTO contas (id,nome,descricao) VALUES (default, '$nome','$descricao')",
       );
-      return;
+      return true;
     }
+    return false;
   }
 
   Future<bool> usuarioExists(String email, String senha) async {
     await setConnection();
     if (_connection != null) {
-      var result = await _connection!.query(
-        "SELECT * FROM usuarios WHERE email = '$email' AND senha = '$senha'",
-      );
-      if (result.isNotEmpty) {
-        return true;
-      }
-    }
-    return false;
-  }
-
-  Future<bool> contaExists(String nome, String descricao) async {
-    await setConnection();
-    if (_connection != null) {
-      var result = await _connection!.query(
-          "SELECT * FROM contas WHERE nome = '$nome' AND descricao = '$descricao'");
-      if (result.isNotEmpty) {
+      await Future.delayed(Duration(seconds: 2));
+      var results = await _connection!.query(
+          "select * from usuarios WHERE email = '$email' and senha = '$senha';");
+      await Future.delayed(Duration(seconds: 2));
+      if (results.toString() != '()') {
         return true;
       }
     }

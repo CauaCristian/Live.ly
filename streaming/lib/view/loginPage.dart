@@ -1,39 +1,55 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_login/flutter_login.dart';
-import 'package:streaming/view/liveLy.dart';
-import '../model/database/db_query.dart';
+import 'liveLy.dart';
+import '../control/db_Control.dart';
 
 class LoginPage extends StatelessWidget {
-  const LoginPage({super.key});
+  DBController _dbController = DBController();
 
-  Duration get loginTime => const Duration(milliseconds: 2250);
-
-  Future<String?> _authUser(LoginData data) {
-    return Future.delayed(loginTime).then((_) async {
-      if (await DBQuery().usuarioExists(data.name, data.password)) {
+  @override
+  Future<String?> _authUser(LoginData data) async {
+    try {
+      bool results =
+          await _dbController.usuarioExists(data.name, data.password);
+      if (results) {
         return null;
+      } else {
+        return 'Credenciais inválidas';
       }
-    });
+    } catch (e) {
+      print('Erro durante a autenticação: $e');
+      return 'Erro durante a autenticação';
+    }
   }
 
-  Future<String?> _signupUser(SignupData data) {
-    debugPrint('Signup Name: ${data.name}, Password: ${data.password}');
-    return Future.delayed(loginTime).then((_) {
-      return null;
-    });
+  Future<String?> _signupUser(SignupData data) async {
+    try {
+      bool results =
+          await _dbController.insertUsuario(data.name!, data.password!);
+      if (results) {
+        return null;
+      } else {
+        return 'Credenciais inválidas';
+      }
+    } catch (e) {
+      print('Erro durante o cadastro: $e');
+      return 'Erro durante o cadastro';
+    }
   }
 
-  Future<String?> _recoverPassword(String name) {
-    debugPrint('Name: $name');
-    return Future.delayed(loginTime).then((_) {
-      return null;
-    });
+  Future<String?> _recoverPassword(String name) async {
+    try {
+      return 'Recuperação de senha enviada para o e-mail associado à conta.';
+    } catch (e) {
+      print('Erro durante a recuperação de senha: $e');
+      return 'Erro durante a recuperação de senha';
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return FlutterLogin(
-      title: 'Live.ly',
+      title: 'Sign In',
       onLogin: _authUser,
       onSignup: _signupUser,
       onSubmitAnimationCompleted: () {
