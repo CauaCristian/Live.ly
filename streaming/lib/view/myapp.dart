@@ -9,7 +9,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       theme: ThemeData(
         brightness: Brightness.dark,
-        primaryColor: Color.fromARGB(255, 2, 0, 22),
+        primaryColor: const Color.fromARGB(255, 2, 0, 22),
       ),
       home: LoginPage(),
     );

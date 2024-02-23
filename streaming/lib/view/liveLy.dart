@@ -4,7 +4,7 @@ import 'loginPage.dart';
 import 'homePage.dart';
 
 class LiveLy extends StatefulWidget {
-  Widget body = homePage();
+  Widget body = const homePage();
   LiveLy({super.key});
   @override
   State<LiveLy> createState() => _MyHomePageState();
@@ -14,14 +14,14 @@ class _MyHomePageState extends State<LiveLy> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 2, 0, 22),
+      backgroundColor: const Color.fromARGB(255, 2, 0, 22),
       appBar: AppBar(
         actions: [
-          IconButton(onPressed: () {}, icon: Icon(Icons.search)),
-          IconButton(onPressed: () {}, icon: Icon(Icons.notifications)),
+          IconButton(onPressed: () {}, icon: const Icon(Icons.search)),
+          IconButton(onPressed: () {}, icon: const Icon(Icons.notifications)),
         ],
-        backgroundColor: Color.fromARGB(255, 2, 0, 22),
-        title: Text("Live.Ly"),
+        backgroundColor: const Color.fromARGB(255, 2, 0, 22),
+        title: const Text("Live.Ly"),
       ),
       body: widget.body,
       bottomNavigationBar: CurvedNavigationBar(
@@ -29,7 +29,7 @@ class _MyHomePageState extends State<LiveLy> {
           switch (index) {
             case 0:
               setState(() {
-                widget.body = homePage();
+                widget.body = const homePage();
               });
             case 1:
               ;
@@ -63,7 +63,7 @@ class _MyHomePageState extends State<LiveLy> {
             size: 35,
           )
         ],
-        color: Color.fromARGB(255, 29, 28, 43),
+        color: const Color.fromARGB(255, 29, 28, 43),
         backgroundColor: Colors.transparent,
       ),
     );

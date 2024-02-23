@@ -1,4 +1,5 @@
 import '../model/database/db_query.dart';
+import '../model/usuario.dart';
 
 class DBController {
   final DBQuery _dbQuery = DBQuery();
@@ -24,6 +25,14 @@ class DBController {
       return await _dbQuery.usuarioExists(email, senha);
     } catch (e) {
       return false;
+    }
+  }
+
+  Future<Usuario?> getUsuario(String email, String senha) async {
+    try {
+      return await _dbQuery.obterUsuarioDoBancoDeDados(email, senha);
+    } catch (e) {
+      return null;
     }
   }
 }
