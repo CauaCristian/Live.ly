@@ -9,12 +9,11 @@ class DBQuery {
     _connection = await DBConnection().createConnection();
   }
 
-  Future<bool> insertUsuario(String email, String password) async {
+  Future<bool> insertUsuario(String email, String senha) async {
     await setConnection();
     if (_connection != null) {
       await _connection!.query(
-        "INSERT INTO usuarios (id,email, senha) VALUES (default,'$email','$password')",
-      );
+          "insert into usuarios(id,email, senha, nome, descricao) values(default,'$email','$senha',default,default);");
       await _connection!.close();
       return true;
     }
@@ -22,12 +21,12 @@ class DBQuery {
     return false;
   }
 
-  Future<bool> insertConta(String nome, String descricao) async {
+  Future<bool> insertUsuarioComplete(
+      int id, String nome, String descricao) async {
     await setConnection();
     if (_connection != null) {
-      _connection!.query(
-        "INSERT INTO contas (id,nome,descricao) VALUES (default, '$nome','$descricao')",
-      );
+      await _connection!.query(
+          "UPDATE usuarios SET nome = '$nome', descricao = '$descricao' WHERE id = '$id';");
       await _connection!.close();
       return true;
     }
@@ -51,13 +50,12 @@ class DBQuery {
     return false;
   }
 
-  Future<Usuario?> obterUsuarioDoBancoDeDados(
-      String email, String senha) async {
+  Future<Usuario?> getUsuario(String email) async {
     await setConnection();
     try {
       await Future.delayed(Duration(seconds: 2));
-      var results = await _connection!.query(
-          "select * from usuarios WHERE email = '$email' and senha = '$senha';");
+      var results = await _connection!
+          .query("select * from usuarios WHERE email = '$email';");
       await Future.delayed(Duration(seconds: 2));
       if (results.isNotEmpty) {
         Map<String, dynamic> usuarioMap = results.first.fields;

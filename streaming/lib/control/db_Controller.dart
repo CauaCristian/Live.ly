@@ -12,9 +12,10 @@ class DBController {
     }
   }
 
-  Future<bool> insertConta(String nome, String descricao) async {
+  Future<bool> insertUsuarioComplete(
+      int id, String nome, String descricao) async {
     try {
-      return await _dbQuery.insertConta(nome, descricao);
+      return await _dbQuery.insertUsuarioComplete(id, nome, descricao);
     } catch (e) {
       return false;
     }
@@ -28,9 +29,9 @@ class DBController {
     }
   }
 
-  Future<Usuario?> getUsuario(String email, String senha) async {
+  Future<Usuario?> getUsuario(String email) async {
     try {
-      return await _dbQuery.obterUsuarioDoBancoDeDados(email, senha);
+      return await _dbQuery.getUsuario(email);
     } catch (e) {
       return null;
     }

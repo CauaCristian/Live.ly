@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_login/flutter_login.dart';
 import 'package:streaming/model/usuario.dart';
 import 'liveLy.dart';
-import '../control/db_Control.dart';
+import '../control/db_Controller.dart';
 import 'formPage.dart';
 
 class LoginPage extends StatelessWidget {
@@ -15,8 +15,7 @@ class LoginPage extends StatelessWidget {
       bool results =
           await _dbController.usuarioExists(data.name, data.password);
       if (results) {
-        _usuario = await _dbController.getUsuario(data.name, data.password);
-        print(_usuario!.id_conta);
+        _usuario = await _dbController.getUsuario(data.name);
         return null;
       } else {
         return 'Credenciais inválidas';
@@ -32,6 +31,7 @@ class LoginPage extends StatelessWidget {
       bool _results =
           await _dbController.insertUsuario(data.name!, data.password!);
       if (_results) {
+        _usuario = await _dbController.getUsuario(data.name!);
         return null;
       } else {
         return 'Credenciais inválidas';
@@ -57,13 +57,13 @@ class LoginPage extends StatelessWidget {
       title: 'Sign In',
       onLogin: _authUser,
       onSignup: _signupUser,
+      onRecoverPassword: _recoverPassword,
       onSubmitAnimationCompleted: () {
         Navigator.of(context).pushReplacement(MaterialPageRoute(
           builder: (context) =>
-              _usuario!.id_conta == null ? FormPage() : LiveLy(),
+              _usuario!.nome == null ? FormPage(_usuario) : LiveLy(),
         ));
       },
-      onRecoverPassword: _recoverPassword,
     );
   }
 }

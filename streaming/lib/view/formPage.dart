@@ -1,30 +1,41 @@
 import 'package:flutter/material.dart';
+import 'package:streaming/control/db_Controller.dart';
+import 'package:streaming/model/usuario.dart';
 
-class FormPage extends StatefulWidget {
-  const FormPage({Key? key}) : super(key: key);
+class FormPage extends StatelessWidget {
+  TextEditingController _nomeController = TextEditingController();
+  TextEditingController _descricaoController = TextEditingController();
+  DBController _dbController = DBController();
+  late Usuario _usuario;
+  FormPage(usuario) {
+    this._usuario = usuario;
+  }
 
-  @override
-  State<FormPage> createState() => _MyWidgetState();
-}
-
-class _MyWidgetState extends State<FormPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
         child: Container(
-          height: 200,
+          height: 330,
           padding: EdgeInsets.all(16.0),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text("Preencha os dados da sua conta"),
+                padding: const EdgeInsets.all(15.0),
+                child: Padding(
+                  padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
+                  child: Text(
+                    "Preencha os dados da sua conta",
+                    style: TextStyle(fontSize: 17),
+                  ),
+                ),
               ),
               TextField(
+                controller: _nomeController,
                 decoration: InputDecoration(
                   labelText: "Nome",
+                  prefixIcon: Icon(Icons.account_circle_outlined),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12.0),
                   ),
@@ -32,10 +43,30 @@ class _MyWidgetState extends State<FormPage> {
               ),
               const SizedBox(height: 16.0),
               TextField(
+                controller: _descricaoController,
                 decoration: InputDecoration(
+                  prefixIcon: Icon(Icons.article_outlined),
                   labelText: "Descrição",
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12.0),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 25.0),
+              ElevatedButton(
+                onPressed: () {},
+                child: Padding(
+                  padding: const EdgeInsets.all(
+                    20.0,
+                  ),
+                  child: const Text(
+                    "Concluir",
+                    style: TextStyle(fontSize: 17),
+                  ),
+                ),
+                style: ButtonStyle(
+                  backgroundColor: MaterialStatePropertyAll(
+                    Colors.cyan[600],
                   ),
                 ),
               ),
