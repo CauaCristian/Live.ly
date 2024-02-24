@@ -1,5 +1,6 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:streaming/view/accountPage.dart';
 import 'loginPage.dart';
 import 'homePage.dart';
 
@@ -36,13 +37,9 @@ class _MyHomePageState extends State<LiveLy> {
             case 2:
               ;
             case 3:
-              setState(() {
-                Navigator.of(context).pop();
-                Navigator.of(context)
-                    .push(MaterialPageRoute(builder: (context) {
-                  return LoginPage();
-                }));
-              });
+              Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+                return AccountPage();
+              }));
           }
         },
         items: const [

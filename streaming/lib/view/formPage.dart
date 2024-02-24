@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:streaming/control/db_Controller.dart';
 import 'package:streaming/model/usuario.dart';
+import 'liveLy.dart';
 
 class FormPage extends StatelessWidget {
   TextEditingController _nomeController = TextEditingController();
@@ -54,7 +55,16 @@ class FormPage extends StatelessWidget {
               ),
               const SizedBox(height: 25.0),
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () async {
+                  _dbController.insertUsuarioComplete(_usuario.id,
+                      _nomeController.text, _descricaoController.text);
+                  _usuario =
+                      await _dbController.getUsuario(_usuario.email) as Usuario;
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(
+                    builder: (context) =>
+                        _usuario!.nome == null ? FormPage(_usuario) : LiveLy(),
+                  ));
+                },
                 child: Padding(
                   padding: const EdgeInsets.all(
                     20.0,
