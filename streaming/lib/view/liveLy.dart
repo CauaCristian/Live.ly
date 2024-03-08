@@ -37,9 +37,9 @@ class _MyHomePageState extends State<LiveLy> {
             case 2:
               ;
             case 3:
-              Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-                return AccountPage();
-              }));
+              setState(() {
+                widget.body = AccountPage();
+              });
           }
         },
         items: const [

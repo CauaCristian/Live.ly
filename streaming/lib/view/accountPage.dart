@@ -1,12 +1,197 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 class AccountPage extends StatelessWidget {
-  const AccountPage({super.key});
+  String nome = "Caua Cristian";
+  String descricao = "Ciencias da Computação";
+  String seguindo = "91";
+  String seguidores = "100k";
+  String curtidas = "4.5M";
+  String image = 'images/7309681.jpg';
+  AccountPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(),
+    return Padding(
+      padding: const EdgeInsets.all(20.0),
+      child: Column(
+        children: [
+          Stack(
+            children: [
+              Center(
+                child: Container(
+                  margin: const EdgeInsets.only(top: 30, bottom: 30),
+                  width: 150,
+                  height: 150,
+                  decoration: BoxDecoration(
+                      boxShadow: const <BoxShadow>[
+                        BoxShadow(
+                          color: Color.fromARGB(255, 0, 250, 146),
+                          blurRadius: 30.0,
+                          offset: Offset.zero,
+                        )
+                      ],
+                      shape: BoxShape.circle,
+                      image: DecorationImage(
+                          fit: BoxFit.fill, image: AssetImage(image))),
+                ),
+              ),
+              Container(
+                margin: const EdgeInsets.only(top: 135, left: 215),
+                child: IconButton(
+                  onPressed: () {},
+                  icon: const Icon(Icons.add),
+                  style: const ButtonStyle(
+                    surfaceTintColor: MaterialStatePropertyAll(
+                        Color.fromARGB(255, 29, 28, 43)),
+                    backgroundColor: MaterialStatePropertyAll(
+                        Color.fromARGB(255, 29, 28, 43)),
+                  ),
+                ),
+              )
+            ],
+          ),
+          Text("@$nome"),
+          const SizedBox(
+            height: 20,
+          ),
+          Text(descricao),
+          const SizedBox(
+            height: 20,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Column(
+                children: [
+                  Text(seguindo),
+                  const Text("Seguindo"),
+                ],
+              ),
+              const SizedBox(
+                height: 25,
+                child: VerticalDivider(
+                  width: 60,
+                  thickness: 2,
+                  indent: 0,
+                  endIndent: 0,
+                  color: Colors.white,
+                ),
+              ),
+              Column(
+                children: [
+                  Text(seguidores),
+                  const Text("Seguidores"),
+                ],
+              ),
+              const SizedBox(
+                height: 25,
+                child: VerticalDivider(
+                  width: 60,
+                  thickness: 2,
+                  indent: 0,
+                  endIndent: 0,
+                  color: Colors.white,
+                ),
+              ),
+              Column(
+                children: [
+                  Text(curtidas),
+                  const Text("Curtidas"),
+                ],
+              ),
+            ],
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          Row(
+            children: [
+              Expanded(
+                flex: 6,
+                child: ElevatedButton(
+                  style: const ButtonStyle(
+                    overlayColor: MaterialStatePropertyAll(
+                        Color.fromARGB(22, 255, 255, 255)),
+                    surfaceTintColor: MaterialStatePropertyAll(
+                        Color.fromARGB(255, 29, 28, 43)),
+                    backgroundColor: MaterialStatePropertyAll(
+                        Color.fromARGB(255, 29, 28, 43)),
+                  ),
+                  onPressed: () {},
+                  child: const Text(
+                    "Adicionar Publicação",
+                    style: TextStyle(color: Colors.white60),
+                  ),
+                ),
+              ),
+              const SizedBox(
+                width: 10,
+              ),
+              Expanded(
+                flex: 1,
+                child: IconButton(
+                  onPressed: () {},
+                  icon: const Icon(Icons.edit),
+                  style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all(
+                          const Color.fromARGB(255, 29, 28, 43))),
+                ),
+              ),
+              const SizedBox(
+                width: 10,
+              ),
+              Expanded(
+                flex: 1,
+                child: IconButton(
+                  onPressed: () {},
+                  icon: const Icon(Icons.menu),
+                  style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all(
+                          const Color.fromARGB(255, 29, 28, 43))),
+                ),
+              ),
+            ],
+          ),
+          Container(
+            margin: EdgeInsets.only(top: 20),
+            height: 250,
+            child: GridView.builder(
+              itemCount: 8,
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                childAspectRatio: 1.0,
+              ),
+              itemBuilder: (context, index) {
+                return (index % 2 == 0)
+                    ? (index % 4 == 0
+                        ? Container(
+                            height: 150,
+                            width: double.infinity,
+                            decoration: BoxDecoration(color: Colors.amber),
+                          )
+                        : Container(
+                            height: 100,
+                            width: double.infinity,
+                            decoration: BoxDecoration(color: Colors.red),
+                          ))
+                    : ((index - 1) % 4 == 0
+                        ? Container(
+                            height: 100,
+                            width: double.infinity,
+                            decoration: BoxDecoration(color: Colors.red),
+                          )
+                        : Container(
+                            height: 150,
+                            width: double.infinity,
+                            decoration: BoxDecoration(color: Colors.amber),
+                          ));
+              },
+            ),
+          )
+        ],
+      ),
     );
   }
 }
