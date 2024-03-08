@@ -6,8 +6,9 @@ class AccountPage extends StatelessWidget {
   String nome = "Caua Cristian";
   String descricao = "Ciencias da Computação";
   String seguindo = "91";
-  String seguidores = "100k";
-  String curtidas = "4.5M";
+  String seguidores = "100M";
+  String curtidas = "4.5B";
+  String Visualizacao = "4.5M";
   String image = 'images/7309681.jpg';
   AccountPage({super.key});
 
@@ -157,36 +158,121 @@ class AccountPage extends StatelessWidget {
           Container(
             margin: EdgeInsets.only(top: 20),
             height: 250,
-            child: GridView.builder(
+            child: ListView.builder(
               itemCount: 8,
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                childAspectRatio: 1.0,
-              ),
               itemBuilder: (context, index) {
-                return (index % 2 == 0)
-                    ? (index % 4 == 0
-                        ? Container(
+                return Row(
+                  children: [
+                    Expanded(
+                      child: Column(
+                        children: [
+                          Container(
+                            height: 220,
+                            decoration: const BoxDecoration(
+                              image: DecorationImage(
+                                  fit: BoxFit.cover,
+                                  image: AssetImage('images/9440461.jpg')),
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(20),
+                              ),
+                            ),
+                            child: Container(
+                                margin: EdgeInsets.only(top: 190),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    const Icon(Icons.play_arrow_outlined),
+                                    Text(Visualizacao)
+                                  ],
+                                )),
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          Container(
                             height: 150,
-                            width: double.infinity,
-                            decoration: BoxDecoration(color: Colors.amber),
-                          )
-                        : Container(
-                            height: 100,
-                            width: double.infinity,
-                            decoration: BoxDecoration(color: Colors.red),
-                          ))
-                    : ((index - 1) % 4 == 0
-                        ? Container(
-                            height: 100,
-                            width: double.infinity,
-                            decoration: BoxDecoration(color: Colors.red),
-                          )
-                        : Container(
+                            decoration: const BoxDecoration(
+                              image: DecorationImage(
+                                  fit: BoxFit.cover,
+                                  image: AssetImage('images/7309681.jpg')),
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(20),
+                              ),
+                            ),
+                            child: Container(
+                                margin: EdgeInsets.only(top: 120),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    const Icon(Icons.play_arrow_outlined),
+                                    Text(Visualizacao)
+                                  ],
+                                )),
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 20,
+                    ),
+                    Expanded(
+                      child: Column(
+                        children: [
+                          Container(
                             height: 150,
-                            width: double.infinity,
-                            decoration: BoxDecoration(color: Colors.amber),
-                          ));
+                            decoration: const BoxDecoration(
+                              image: DecorationImage(
+                                  fit: BoxFit.cover,
+                                  image: AssetImage('images/7309703.jpg')),
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(20),
+                              ),
+                            ),
+                            child: Container(
+                                margin: EdgeInsets.only(top: 120),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    const Icon(Icons.play_arrow_outlined),
+                                    Text(Visualizacao)
+                                  ],
+                                )),
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          Container(
+                            height: 220,
+                            decoration: const BoxDecoration(
+                              image: DecorationImage(
+                                fit: BoxFit.cover,
+                                image: AssetImage('images/DPlyreSX4AA-XNY.jpg'),
+                              ),
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(20),
+                              ),
+                            ),
+                            child: Container(
+                                margin: EdgeInsets.only(top: 190),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    const Icon(Icons.play_arrow_outlined),
+                                    Text(Visualizacao)
+                                  ],
+                                )),
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                );
               },
             ),
           )
