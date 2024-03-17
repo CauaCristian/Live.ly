@@ -1,5 +1,5 @@
-import '../model/database/db_query.dart';
-import '../model/usuario.dart';
+import '../services/database/db_query.dart';
+import '../models/usuario.dart';
 
 class DBController {
   final DBQuery _dbQuery = DBQuery();

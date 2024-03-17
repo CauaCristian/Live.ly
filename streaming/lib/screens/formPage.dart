@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:streaming/control/db_Controller.dart';
-import 'package:streaming/model/usuario.dart';
+import 'package:streaming/stores/db_Controller.dart';
+import 'package:streaming/models/usuario.dart';
 import 'liveLy.dart';
 
 class FormPage extends StatelessWidget {

@@ -1,4 +1,4 @@
-import 'package:streaming/model/database/db_configuration.dart';
+import 'package:streaming/services/database/db_configuration.dart';
 import 'package:mysql1/mysql1.dart';
 
 class MySqlDBconfiguration implements DBConfiguration {

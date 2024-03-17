@@ -1,6 +1,6 @@
 import 'db_connection.dart';
 import 'package:mysql1/mysql1.dart';
-import '../usuario.dart';
+import '../../models/usuario.dart';
 
 class DBQuery {
   MySqlConnection? _connection;

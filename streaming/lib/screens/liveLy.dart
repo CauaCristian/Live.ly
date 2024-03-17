@@ -1,6 +1,6 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:streaming/view/accountPage.dart';
+import 'package:streaming/screens/accountPage.dart';
 import 'loginPage.dart';
 import 'homePage.dart';
 

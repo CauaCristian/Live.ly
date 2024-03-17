@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_login/flutter_login.dart';
-import 'package:streaming/model/usuario.dart';
+import 'package:streaming/models/usuario.dart';
 import 'liveLy.dart';
-import '../control/db_Controller.dart';
+import '../stores/db_Controller.dart';
 import 'formPage.dart';
 
 class LoginPage extends StatelessWidget {
