@@ -1,21 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_login/flutter_login.dart';
-import 'package:streaming/models/usuario.dart';
-import 'liveLy.dart';
-import '../stores/db_Controller.dart';
-import 'formPage.dart';
+import 'package:streaming/models/user_model.dart';
+import 'package:streaming/screens/form_Page.dart';
+import 'package:streaming/screens/liveLy_App.dart';
+import '../stores/currentUser_Store.dart';
 
 class LoginPage extends StatelessWidget {
-  final DBController _dbController = DBController();
-  Usuario? _usuario;
+  late CurrentUserStore _currentUserStore = CurrentUserStore();
+
+  LoginPage({super.key});
 
   @override
   Future<String?> _authUser(LoginData data) async {
     try {
       bool results =
-          await _dbController.usuarioExists(data.name, data.password);
+          await _currentUserStore.userExists(data.name, data.password);
       if (results) {
-        _usuario = await _dbController.getUsuario(data.name);
+        _currentUserStore.currentUser =
+            await _currentUserStore.getUser(data.name);
         return null;
       } else {
         return 'Credenciais inválidas';
@@ -28,10 +30,11 @@ class LoginPage extends StatelessWidget {
 
   Future<String?> _signupUser(SignupData data) async {
     try {
-      bool _results =
-          await _dbController.insertUsuario(data.name!, data.password!);
-      if (_results) {
-        _usuario = await _dbController.getUsuario(data.name!);
+      bool results =
+          await _currentUserStore.insertUser(data.name!, data.password!);
+      if (results) {
+        _currentUserStore.currentUser =
+            await _currentUserStore.getUser(data.name!);
         return null;
       } else {
         return 'Credenciais inválidas';
@@ -60,8 +63,9 @@ class LoginPage extends StatelessWidget {
       onRecoverPassword: _recoverPassword,
       onSubmitAnimationCompleted: () {
         Navigator.of(context).pushReplacement(MaterialPageRoute(
-          builder: (context) =>
-              _usuario!.nome == null ? FormPage(_usuario) : LiveLy(),
+          builder: (context) => _currentUserStore.currentUser!.nome == null
+              ? FormPage(_currentUserStore)
+              : LiveLy(_currentUserStore),
         ));
       },
     );

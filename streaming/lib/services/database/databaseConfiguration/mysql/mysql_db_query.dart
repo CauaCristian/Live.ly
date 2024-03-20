@@ -1,15 +1,15 @@
-import 'db_connection.dart';
 import 'package:mysql1/mysql1.dart';
-import '../../models/usuario.dart';
+import '../../../../models/user_Model.dart';
+import '../mysql/mysql_db_connection.dart';
 
-class DBQuery {
+class MySqlDBQuery {
   MySqlConnection? _connection;
 
   setConnection() async {
-    _connection = await DBConnection().createConnection();
+    _connection = await MySqlDBConnection().createConnection();
   }
 
-  Future<bool> insertUsuario(String email, String senha) async {
+  Future<bool> insertUser(String email, String senha) async {
     await setConnection();
     if (_connection != null) {
       await _connection!.query(
@@ -21,8 +21,7 @@ class DBQuery {
     return false;
   }
 
-  Future<bool> insertUsuarioComplete(
-      int id, String nome, String descricao) async {
+  Future<bool> editUser(int id, String nome, String descricao) async {
     await setConnection();
     if (_connection != null) {
       await _connection!.query(
@@ -34,13 +33,13 @@ class DBQuery {
     return false;
   }
 
-  Future<bool> usuarioExists(String email, String senha) async {
+  Future<bool> userExists(String email, String senha) async {
     await setConnection();
     if (_connection != null) {
-      await Future.delayed(Duration(seconds: 2));
+      await Future.delayed(const Duration(seconds: 2));
       var results = await _connection!.query(
           "select * from usuarios WHERE email = '$email' and senha = '$senha';");
-      await Future.delayed(Duration(seconds: 2));
+      await Future.delayed(const Duration(seconds: 2));
       if (results.isNotEmpty) {
         await _connection!.close();
         return true;
@@ -50,16 +49,16 @@ class DBQuery {
     return false;
   }
 
-  Future<Usuario?> getUsuario(String email) async {
+  Future<User?> getUser(String email) async {
     await setConnection();
     try {
-      await Future.delayed(Duration(seconds: 2));
+      await Future.delayed(const Duration(seconds: 2));
       var results = await _connection!
           .query("select * from usuarios WHERE email = '$email';");
-      await Future.delayed(Duration(seconds: 2));
+      await Future.delayed(const Duration(seconds: 2));
       if (results.isNotEmpty) {
         Map<String, dynamic> usuarioMap = results.first.fields;
-        return Usuario.fromJSON(usuarioMap);
+        return User.fromJSON(usuarioMap);
       }
     } finally {
       await _connection!.close();

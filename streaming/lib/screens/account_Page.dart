@@ -1,16 +1,18 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:mobx/mobx.dart';
+import 'package:streaming/stores/currentUser_Store.dart';
 
 class AccountPage extends StatelessWidget {
-  String nome = "Caua Cristian";
-  String descricao = "Ciencias da Computação";
+  final TextEditingController _nomeController = TextEditingController();
+  final TextEditingController _descricaoController = TextEditingController();
+  CurrentUserStore _currentUserStore;
   String seguindo = "91";
   String seguidores = "100M";
   String curtidas = "4.5B";
   String Visualizacao = "4.5M";
   String image = 'images/7309681.jpg';
-  AccountPage({super.key});
+  AccountPage(this._currentUserStore);
 
   @override
   Widget build(BuildContext context) {
@@ -53,11 +55,17 @@ class AccountPage extends StatelessWidget {
               )
             ],
           ),
-          Text("@$nome"),
+          Observer(
+            builder: (context) {
+              return Text("@${_currentUserStore.currentUser!.nome}");
+            },
+          ),
           const SizedBox(
             height: 20,
           ),
-          Text(descricao),
+          Observer(builder: (context) {
+            return Text(_currentUserStore.currentUser!.descricao as String);
+          }),
           const SizedBox(
             height: 20,
           ),
@@ -133,7 +141,86 @@ class AccountPage extends StatelessWidget {
               Expanded(
                 flex: 1,
                 child: IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    showModalBottomSheet(
+                        context: context,
+                        builder: (context) {
+                          return Container(
+                            child: Center(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  const Padding(
+                                    padding: EdgeInsets.all(15.0),
+                                    child: Padding(
+                                      padding:
+                                          EdgeInsets.fromLTRB(0, 10, 0, 10),
+                                      child: Text(
+                                        "Preencha os dados da sua conta",
+                                        style: TextStyle(fontSize: 17),
+                                      ),
+                                    ),
+                                  ),
+                                  TextField(
+                                    controller: _nomeController,
+                                    decoration: InputDecoration(
+                                      labelText: "Nome",
+                                      prefixIcon: const Icon(
+                                          Icons.account_circle_outlined),
+                                      border: OutlineInputBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(12.0),
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(height: 16.0),
+                                  TextField(
+                                    controller: _descricaoController,
+                                    decoration: InputDecoration(
+                                      prefixIcon:
+                                          const Icon(Icons.article_outlined),
+                                      labelText: "Descrição",
+                                      border: OutlineInputBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(12.0),
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(height: 25.0),
+                                  ElevatedButton(
+                                    onPressed: () async {
+                                      await _currentUserStore.editUser(
+                                          _currentUserStore.currentUser!.id,
+                                          _nomeController.text,
+                                          _descricaoController.text);
+
+                                      _currentUserStore.currentUser =
+                                          await _currentUserStore.getUser(
+                                              _currentUserStore
+                                                  .currentUser!.email);
+                                      Navigator.pop(context);
+                                    },
+                                    style: ButtonStyle(
+                                      backgroundColor: MaterialStatePropertyAll(
+                                        Colors.cyan[600],
+                                      ),
+                                    ),
+                                    child: const Padding(
+                                      padding: EdgeInsets.all(
+                                        20.0,
+                                      ),
+                                      child: Text(
+                                        "Concluir",
+                                        style: TextStyle(fontSize: 17),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          );
+                        });
+                  },
                   icon: const Icon(Icons.edit),
                   style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all(
@@ -156,7 +243,7 @@ class AccountPage extends StatelessWidget {
             ],
           ),
           Container(
-            margin: EdgeInsets.only(top: 20),
+            margin: const EdgeInsets.only(top: 20),
             height: 250,
             child: ListView.builder(
               itemCount: 8,
@@ -177,7 +264,7 @@ class AccountPage extends StatelessWidget {
                               ),
                             ),
                             child: Container(
-                                margin: EdgeInsets.only(top: 190),
+                                margin: const EdgeInsets.only(top: 190),
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
@@ -200,7 +287,7 @@ class AccountPage extends StatelessWidget {
                               ),
                             ),
                             child: Container(
-                                margin: EdgeInsets.only(top: 120),
+                                margin: const EdgeInsets.only(top: 120),
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
@@ -232,7 +319,7 @@ class AccountPage extends StatelessWidget {
                               ),
                             ),
                             child: Container(
-                                margin: EdgeInsets.only(top: 120),
+                                margin: const EdgeInsets.only(top: 120),
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
@@ -256,7 +343,7 @@ class AccountPage extends StatelessWidget {
                               ),
                             ),
                             child: Container(
-                                margin: EdgeInsets.only(top: 190),
+                                margin: const EdgeInsets.only(top: 190),
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [

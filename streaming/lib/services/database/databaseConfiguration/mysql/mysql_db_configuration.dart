@@ -1,11 +1,11 @@
-import 'package:streaming/services/database/db_configuration.dart';
 import 'package:mysql1/mysql1.dart';
+import '../db_configuration.dart';
 
 class MySqlDBconfiguration implements DBConfiguration {
   MySqlConnection? _connection;
   @override
   Future<MySqlConnection?> get connection async {
-    if (_connection == null) _connection = await createConnection();
+    _connection ??= await createConnection();
     return _connection;
   }
 

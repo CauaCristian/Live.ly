@@ -1,12 +1,13 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:streaming/screens/accountPage.dart';
-import 'loginPage.dart';
-import 'homePage.dart';
+import 'package:streaming/screens/account_Page.dart';
+import 'package:streaming/screens/home_Page.dart';
+import 'package:streaming/stores/currentUser_Store.dart';
 
 class LiveLy extends StatefulWidget {
+  CurrentUserStore _currentUserStore;
   Widget body = const homePage();
-  LiveLy({super.key});
+  LiveLy(this._currentUserStore);
   @override
   State<LiveLy> createState() => _MyHomePageState();
 }
@@ -38,7 +39,7 @@ class _MyHomePageState extends State<LiveLy> {
               ;
             case 3:
               setState(() {
-                widget.body = AccountPage();
+                widget.body = AccountPage(widget._currentUserStore);
               });
           }
         },

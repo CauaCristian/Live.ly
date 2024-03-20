@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:streaming/stores/db_Controller.dart';
-import 'package:streaming/models/usuario.dart';
-import 'liveLy.dart';
+import 'package:streaming/screens/liveLy_App.dart';
+import 'package:streaming/models/user_model.dart';
+import 'package:streaming/stores/currentUser_Store.dart';
 
 class FormPage extends StatelessWidget {
-  TextEditingController _nomeController = TextEditingController();
-  TextEditingController _descricaoController = TextEditingController();
-  DBController _dbController = DBController();
-  late Usuario _usuario;
-  FormPage(usuario) {
-    this._usuario = usuario;
+  final TextEditingController _nomeController = TextEditingController();
+  final TextEditingController _descricaoController = TextEditingController();
+  late CurrentUserStore _currentUserStore;
+  FormPage(currentUserStore, {super.key}) {
+    _currentUserStore = currentUserStore;
   }
 
   @override
@@ -18,12 +17,12 @@ class FormPage extends StatelessWidget {
       body: Center(
         child: Container(
           height: 330,
-          padding: EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(16.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const Padding(
-                padding: const EdgeInsets.all(15.0),
+                padding: EdgeInsets.all(15.0),
                 child: Padding(
                   padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
                   child: Text(
@@ -36,7 +35,7 @@ class FormPage extends StatelessWidget {
                 controller: _nomeController,
                 decoration: InputDecoration(
                   labelText: "Nome",
-                  prefixIcon: Icon(Icons.account_circle_outlined),
+                  prefixIcon: const Icon(Icons.account_circle_outlined),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12.0),
                   ),
@@ -46,7 +45,7 @@ class FormPage extends StatelessWidget {
               TextField(
                 controller: _descricaoController,
                 decoration: InputDecoration(
-                  prefixIcon: Icon(Icons.article_outlined),
+                  prefixIcon: const Icon(Icons.article_outlined),
                   labelText: "Descrição",
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12.0),
@@ -56,27 +55,29 @@ class FormPage extends StatelessWidget {
               const SizedBox(height: 25.0),
               ElevatedButton(
                 onPressed: () async {
-                  _dbController.insertUsuarioComplete(_usuario.id,
+                  _currentUserStore.editUser(_currentUserStore.currentUser!.id,
                       _nomeController.text, _descricaoController.text);
-                  _usuario =
-                      await _dbController.getUsuario(_usuario.email) as Usuario;
+                  _currentUserStore.currentUser = await _currentUserStore
+                      .getUser(_currentUserStore.currentUser!.email);
                   Navigator.of(context).pushReplacement(MaterialPageRoute(
                     builder: (context) =>
-                        _usuario!.nome == null ? FormPage(_usuario) : LiveLy(),
+                        _currentUserStore.currentUser!.nome == null
+                            ? FormPage(_currentUserStore)
+                            : LiveLy(_currentUserStore),
                   ));
                 },
-                child: Padding(
-                  padding: const EdgeInsets.all(
-                    20.0,
-                  ),
-                  child: const Text(
-                    "Concluir",
-                    style: TextStyle(fontSize: 17),
-                  ),
-                ),
                 style: ButtonStyle(
                   backgroundColor: MaterialStatePropertyAll(
                     Colors.cyan[600],
+                  ),
+                ),
+                child: const Padding(
+                  padding: EdgeInsets.all(
+                    20.0,
+                  ),
+                  child: Text(
+                    "Concluir",
+                    style: TextStyle(fontSize: 17),
                   ),
                 ),
               ),
